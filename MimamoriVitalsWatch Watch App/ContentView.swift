@@ -18,28 +18,34 @@ struct ContentView: View {
             Text("HR: \(Int(hrm.latestHR ?? 0))")
 
             Button("Ping送信") { wm.sendPing() }
-            Button("心拍を取得") { hrm.fetchLatest() }   // あなたのメソッド名に合わせる
+
+            Button("心拍を取得") {
+                hrm.fetchLatest()
+                if let hr = hrm.latestHR {
+                    wm.processHeartRate(hr: hr)
+                }
+            }
+
             Button("心拍を送信") {
                 if let hr = hrm.latestHR {
                     wm.sendVitals(hr: hr)
+                } else {
+                    print("[UI] heart rate not ready")
                 }
             }
         }
         .onAppear {
             wm.activate()
             Task { await hrm.requestAuthorization() }
-            
+
+            // ★ Timerはここに1個だけ
             timer?.invalidate()
             timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
                 hrm.fetchLatest()
                 if let hr = hrm.latestHR {
-                    wm.processHeartRate(hr: hr)
+                    wm.processHeartRate(hr: hr) // ★安定策：値が同じでも評価される
                 }
             }
-        }
-        .onChange(of: hrm.latestHR) { _, newVal in
-            guard let hr = newVal else { return }
-            wm.processHeartRate(hr: hr)   // ★ここが自動発火
         }
         .onDisappear {
             timer?.invalidate()

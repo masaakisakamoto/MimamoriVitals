@@ -12,24 +12,19 @@ import Combine
 @MainActor
 final class WatchSessionManager: NSObject, ObservableObject {
     static let shared = WatchSessionManager()
+    override private init() { super.init() }
 
-    // ===== 発火ゲート設定 =====
-    private let minInterval: TimeInterval = 10   // 最短10秒
-    private let deltaThreshold: Double = 8       // ±8bpm
-
-    private var lastSentAt: Date? = nil          // 前回送信時刻
-    private var lastSentHR: Double? = nil        // 前回送信心拍
-    private var lastQueuedHR: Double? = nil      // 送信判定用（任意）
-
-    override private init() {
-        super.init()
-    }
+    // ③ 変化量トリガ（±8bpm）＋最短10秒
+    private let minInterval: TimeInterval = 10
+    private let deltaThreshold: Double = 8
+    private var lastSentAt: Date? = nil
+    private var lastSentHR: Double? = nil
 
     /// 心拍サンプルが来たらここに流す（発火ゲート）
     func processHeartRate(hr: Double) {
         let now = Date()
 
-        // 初回：基準がないので1回送る（デモが安定する）
+        // 初回：基準がないので1回送る
         if lastSentAt == nil || lastSentHR == nil {
             lastSentAt = now
             lastSentHR = hr
@@ -44,23 +39,16 @@ final class WatchSessionManager: NSObject, ObservableObject {
         }
 
         // 変化量判定：前回送信HRとの差が±8以上なら送る
-        guard let last = lastSentHR else { return }
-        let delta = abs(hr - last)
-
-        guard delta >= deltaThreshold else {
-            return
-        }
+        let delta = abs(hr - (lastSentHR ?? hr))
+        guard delta >= deltaThreshold else { return }
 
         // 送信確定
         lastSentAt = now
         lastSentHR = hr
-        lastQueuedHR = hr
-
         print("[Gate] FIRE hr=\(hr) delta=\(delta)")
         sendVitals(hr: hr)
     }
 
-    // ===== WCSession =====
     func activate() {
         guard WCSession.isSupported() else { return }
         let s = WCSession.default
@@ -71,21 +59,19 @@ final class WatchSessionManager: NSObject, ObservableObject {
 
     func sendPing() {
         let s = WCSession.default
-        print("[Watch] isReachable =", s.isReachable)
-
         let msg: [String: Any] = [
             "type": "ping",
             "ts": Date().timeIntervalSince1970
         ]
 
+        print("[Watch] isReachable =", s.isReachable)
         if s.isReachable {
-            print("[Watch] sendMessage")
             s.sendMessage(msg, replyHandler: nil) { error in
-                print("[Watch] sendMessage error:", error.localizedDescription)
+                print("[Watch] sendPing error:", error.localizedDescription)
             }
         } else {
-            print("[Watch] transferUserInfo")
             s.transferUserInfo(msg)
+            print("[Watch] ping -> transferUserInfo")
         }
     }
 
@@ -102,13 +88,13 @@ final class WatchSessionManager: NSObject, ObservableObject {
             "user_id": userId,
             "timestamp": formatter.string(from: Date()),
             "watch": [
-                "hr_bpm": Int(hr.rounded()),   // 実測
-                "hr_confidence": 0.9,          // 仮値（未実装）
-                "hrv_rmssd_ms": 28,            // 仮値（未実装）
-                "motion_energy": 0.63,         // 仮値（未実装）
-                "steps_per_min": 0,            // 仮値（未実装）
-                "is_wrist_on": true,           // 仮値（未実装）
-                "battery": 0.54                // 仮値（未実装）
+                "hr_bpm": Int(hr.rounded()),
+                "hr_confidence": 0.9,
+                "hrv_rmssd_ms": 28,
+                "motion_energy": 0.63,
+                "steps_per_min": 0,
+                "is_wrist_on": true,
+                "battery": 0.54
             ]
         ]
 
@@ -116,11 +102,9 @@ final class WatchSessionManager: NSObject, ObservableObject {
         print("[Watch] isReachable =", s.isReachable)
 
         if s.isReachable {
-            s.sendMessage(msg, replyHandler: { reply in
-                print("[Watch] sendVitals reply:", reply)
-            }, errorHandler: { error in
+            s.sendMessage(msg, replyHandler: nil) { error in
                 print("[Watch] sendVitals error:", error.localizedDescription)
-            })
+            }
         } else {
             s.transferUserInfo(msg)
             print("[Watch] vital -> transferUserInfo (queued)")
