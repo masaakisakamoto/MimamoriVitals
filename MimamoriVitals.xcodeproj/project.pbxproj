@@ -6,14 +6,50 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C01D3FFF2F1BC85F001293B6 /* MimamoriVitalsWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C01D3FF52F1BC85E001293B6 /* MimamoriVitalsWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C08E78DB2F1BDADF002BD232 /* PhoneConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E78DA2F1BDADF002BD232 /* PhoneConnectivityManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C01D3FFD2F1BC85F001293B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C01D3FDB2F1BC742001293B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C01D3FF42F1BC85E001293B6;
+			remoteInfo = "MimamoriVitalsWatch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C01D40032F1BC85F001293B6 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				C01D3FFF2F1BC85F001293B6 /* MimamoriVitalsWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		C01D3FE32F1BC742001293B6 /* MimamoriVitals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MimamoriVitals.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C01D3FF52F1BC85E001293B6 /* MimamoriVitalsWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MimamoriVitalsWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C08E78DA2F1BDADF002BD232 /* PhoneConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneConnectivityManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C01D3FE52F1BC742001293B6 /* MimamoriVitals */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = MimamoriVitals;
+			sourceTree = "<group>";
+		};
+		C01D3FF62F1BC85E001293B6 /* MimamoriVitalsWatch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "MimamoriVitalsWatch Watch App";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,13 +62,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C01D3FF22F1BC85E001293B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		C01D3FDA2F1BC742001293B6 = {
 			isa = PBXGroup;
 			children = (
+				C08E78DA2F1BDADF002BD232 /* PhoneConnectivityManager.swift */,
 				C01D3FE52F1BC742001293B6 /* MimamoriVitals */,
+				C01D3FF62F1BC85E001293B6 /* MimamoriVitalsWatch Watch App */,
 				C01D3FE42F1BC742001293B6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				C01D3FE32F1BC742001293B6 /* MimamoriVitals.app */,
+				C01D3FF52F1BC85E001293B6 /* MimamoriVitalsWatch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,10 +101,12 @@
 				C01D3FDF2F1BC742001293B6 /* Sources */,
 				C01D3FE02F1BC742001293B6 /* Frameworks */,
 				C01D3FE12F1BC742001293B6 /* Resources */,
+				C01D40032F1BC85F001293B6 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C01D3FFE2F1BC85F001293B6 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				C01D3FE52F1BC742001293B6 /* MimamoriVitals */,
@@ -68,6 +116,28 @@
 			);
 			productName = MimamoriVitals;
 			productReference = C01D3FE32F1BC742001293B6 /* MimamoriVitals.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C01D3FF42F1BC85E001293B6 /* MimamoriVitalsWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01D40002F1BC85F001293B6 /* Build configuration list for PBXNativeTarget "MimamoriVitalsWatch Watch App" */;
+			buildPhases = (
+				C01D3FF12F1BC85E001293B6 /* Sources */,
+				C01D3FF22F1BC85E001293B6 /* Frameworks */,
+				C01D3FF32F1BC85E001293B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C01D3FF62F1BC85E001293B6 /* MimamoriVitalsWatch Watch App */,
+			);
+			name = "MimamoriVitalsWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "MimamoriVitalsWatch Watch App";
+			productReference = C01D3FF52F1BC85E001293B6 /* MimamoriVitalsWatch Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -81,6 +151,9 @@
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					C01D3FE22F1BC742001293B6 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					C01D3FF42F1BC85E001293B6 = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -100,12 +173,20 @@
 			projectRoot = "";
 			targets = (
 				C01D3FE22F1BC742001293B6 /* MimamoriVitals */,
+				C01D3FF42F1BC85E001293B6 /* MimamoriVitalsWatch Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C01D3FE12F1BC742001293B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C01D3FF32F1BC85E001293B6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -119,10 +200,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C08E78DB2F1BDADF002BD232 /* PhoneConnectivityManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C01D3FF12F1BC85E001293B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C01D3FFE2F1BC85F001293B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C01D3FF42F1BC85E001293B6 /* MimamoriVitalsWatch Watch App */;
+			targetProxy = C01D3FFD2F1BC85F001293B6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C01D3FEC2F1BC743001293B6 /* Debug */ = {
@@ -261,6 +358,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -293,6 +391,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,6 +406,78 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C01D40012F1BC85F001293B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MimamoriVitalsWatch Watch App/MimamoriVitalsWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4UNLGBQ389;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MimamoriVitalsWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "心拍数を取得して体調変化の兆候を検知するために使用します。";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "心拍データを記録・更新するために使用します。";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = jp.masaakisakamoto.MimamoriVitals;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.masaakisakamoto.MimamoriVitals.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Debug;
+		};
+		C01D40022F1BC85F001293B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "MimamoriVitalsWatch Watch App/MimamoriVitalsWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4UNLGBQ389;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = MimamoriVitalsWatch;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "心拍数を取得して体調変化の兆候を検知するために使用します。";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "心拍データを記録・更新するために使用します。";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = jp.masaakisakamoto.MimamoriVitals;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.masaakisakamoto.MimamoriVitals.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
 			};
 			name = Release;
 		};
@@ -327,6 +498,15 @@
 			buildConfigurations = (
 				C01D3FEF2F1BC743001293B6 /* Debug */,
 				C01D3FF02F1BC743001293B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01D40002F1BC85F001293B6 /* Build configuration list for PBXNativeTarget "MimamoriVitalsWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01D40012F1BC85F001293B6 /* Debug */,
+				C01D40022F1BC85F001293B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

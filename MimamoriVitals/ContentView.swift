@@ -7,18 +7,17 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct ContentView: View {
+    @StateObject private var cm = PhoneConnectivityManager.shared
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack(spacing: 12) {
+            Text("iPhone")
+            Text(cm.last.description).font(.caption)
         }
         .padding()
+        .onAppear { cm.activate() }
     }
-}
-
-#Preview {
-    ContentView()
 }
