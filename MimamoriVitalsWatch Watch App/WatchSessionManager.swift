@@ -13,8 +13,54 @@ import Combine
 final class WatchSessionManager: NSObject, ObservableObject {
     static let shared = WatchSessionManager()
 
-    override private init() { super.init() }
+    // ===== 発火ゲート設定 =====
+    private let minInterval: TimeInterval = 10   // 最短10秒
+    private let deltaThreshold: Double = 8       // ±8bpm
 
+    private var lastSentAt: Date? = nil          // 前回送信時刻
+    private var lastSentHR: Double? = nil        // 前回送信心拍
+    private var lastQueuedHR: Double? = nil      // 送信判定用（任意）
+
+    override private init() {
+        super.init()
+    }
+
+    /// 心拍サンプルが来たらここに流す（発火ゲート）
+    func processHeartRate(hr: Double) {
+        let now = Date()
+
+        // 初回：基準がないので1回送る（デモが安定する）
+        if lastSentAt == nil || lastSentHR == nil {
+            lastSentAt = now
+            lastSentHR = hr
+            print("[Gate] first send hr=\(hr)")
+            sendVitals(hr: hr)
+            return
+        }
+
+        // 連発防止：前回送信から10秒未満なら送らない
+        if let lastAt = lastSentAt, now.timeIntervalSince(lastAt) < minInterval {
+            return
+        }
+
+        // 変化量判定：前回送信HRとの差が±8以上なら送る
+        guard let last = lastSentHR else { return }
+        let delta = abs(hr - last)
+
+        guard delta >= deltaThreshold else {
+            return
+        }
+
+        // 送信確定
+        lastSentAt = now
+        lastSentHR = hr
+        lastQueuedHR = hr
+
+        print("[Gate] FIRE hr=\(hr) delta=\(delta)")
+        sendVitals(hr: hr)
+    }
+
+    // ===== WCSession =====
     func activate() {
         guard WCSession.isSupported() else { return }
         let s = WCSession.default
@@ -42,7 +88,7 @@ final class WatchSessionManager: NSObject, ObservableObject {
             s.transferUserInfo(msg)
         }
     }
-    
+
     func sendVitals(
         hr: Double,
         userId: String = "demo-elderly-001"

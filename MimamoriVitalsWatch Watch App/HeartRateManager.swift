@@ -15,7 +15,8 @@ final class HeartRateManager: ObservableObject {
 
     private let store = HKHealthStore()
 
-    @Published var latestHR: Double? = nil
+    // UIが監視できる値（nilのときは未取得）
+    @Published private(set) var latestHR: Double? = nil
 
     private init() {}
 
@@ -34,12 +35,16 @@ final class HeartRateManager: ObservableObject {
         }
     }
 
+    /// 直近の心拍（最大1件）を取得して latestHR を更新
     func fetchLatest() {
         guard let hrType = HKObjectType.quantityType(forIdentifier: .heartRate) else { return }
 
-        let pred = HKQuery.predicateForSamples(withStart: Date().addingTimeInterval(-60 * 60),
-                                              end: nil,
-                                              options: .strictEndDate)
+        let pred = HKQuery.predicateForSamples(
+            withStart: Date().addingTimeInterval(-60 * 60),
+            end: nil,
+            options: .strictEndDate
+        )
+
         let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
 
         let q = HKSampleQuery(sampleType: hrType, predicate: pred, limit: 1, sortDescriptors: [sort]) { [weak self] _, samples, error in
@@ -62,5 +67,10 @@ final class HeartRateManager: ObservableObject {
         }
 
         store.execute(q)
+    }
+
+    /// ContentViewから呼びやすいショートカット（あなたがボタンに割り当てたいなら）
+    func start() {
+        fetchLatest()
     }
 }

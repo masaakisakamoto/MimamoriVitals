@@ -71,8 +71,7 @@ extension PhoneConnectivityManager: WCSessionDelegate {
     }
 
     // ✅ transferUserInfo を受ける版（シグネチャ修正が重要）
-    nonisolated func session(_ session: WCSession,
-                             didReceiveUserInfo userInfo: [String : Any]) {
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
         print("[Phone] didReceiveUserInfo:", userInfo)
 
         Task { @MainActor in

@@ -9,31 +9,41 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var wm = WatchSessionManager.shared
-    @StateObject private var hr = HeartRateManager.shared
+    @StateObject private var hrm = HeartRateManager.shared
+    @State private var timer: Timer?
 
     var body: some View {
         VStack(spacing: 10) {
             Text("Watch")
+            Text("HR: \(Int(hrm.latestHR ?? 0))")
 
-            Button("Ping送信") {
-                wm.sendPing()
-            }
-
-            Button("心拍を取得") {
-                hr.fetchLatest()
-            }
-
+            Button("Ping送信") { wm.sendPing() }
+            Button("心拍を取得") { hrm.fetchLatest() }   // あなたのメソッド名に合わせる
             Button("心拍を送信") {
-                guard let bpm = hr.latestHR else {
-                    print("[UI] heart rate not ready")
-                    return
+                if let hr = hrm.latestHR {
+                    wm.sendVitals(hr: hr)
                 }
-                wm.sendVitals(hr: bpm)
             }
         }
         .onAppear {
             wm.activate()
-            Task { await hr.requestAuthorization() }
+            Task { await hrm.requestAuthorization() }
+            
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+                hrm.fetchLatest()
+                if let hr = hrm.latestHR {
+                    wm.processHeartRate(hr: hr)
+                }
+            }
+        }
+        .onChange(of: hrm.latestHR) { _, newVal in
+            guard let hr = newVal else { return }
+            wm.processHeartRate(hr: hr)   // ★ここが自動発火
+        }
+        .onDisappear {
+            timer?.invalidate()
+            timer = nil
         }
     }
 }
