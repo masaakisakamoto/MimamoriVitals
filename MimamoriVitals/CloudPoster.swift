@@ -7,32 +7,32 @@
 
 import Foundation
 
-enum CloudPoster {
-    static func postJSON(_ payload: [String: Any], to urlString: String) async {
-        guard let url = URL(string: urlString) else {
-            print("[POST] invalid url")
+struct CloudPoster {
+
+    /// バイタルJSONをフロントの endpoint に POST
+    static func postVitals(_ json: [String: Any]) async {
+        guard JSONSerialization.isValidJSONObject(json),
+              let data = try? JSONSerialization.data(withJSONObject: json) else {
+            print("[CloudPoster] invalid JSON")
             return
         }
 
-        var req = URLRequest(url: url)
-        req.httpMethod = "POST"
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = URLRequest(url: APIEndpoints.vitals)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // 🔐 認証が必要になったらここを有効化
+        // request.setValue("Bearer YOUR_TOKEN", forHTTPHeaderField: "Authorization")
+
+        request.httpBody = data
 
         do {
-            req.httpBody = try JSONSerialization.data(withJSONObject: payload, options: [])
-            let (data, resp) = try await URLSession.shared.data(for: req)
-
-            if let http = resp as? HTTPURLResponse {
-                print("[POST] status:", http.statusCode)
-            } else {
-                print("[POST] non-http response")
-            }
-
-            if let text = String(data: data, encoding: .utf8) {
-                print("[POST] body:", text)
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let http = response as? HTTPURLResponse {
+                print("[CloudPoster] status:", http.statusCode)
             }
         } catch {
-            print("[POST] error:", error.localizedDescription)
+            print("[CloudPoster] error:", error.localizedDescription)
         }
     }
 }
