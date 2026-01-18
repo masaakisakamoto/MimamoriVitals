@@ -11,6 +11,8 @@ struct ContentView: View {
     @StateObject private var wm = WatchSessionManager.shared
     @StateObject private var hrm = HeartRateManager.shared
     @State private var timer: Timer?
+    
+    @State private var didStart = false
 
     var body: some View {
         VStack(spacing: 10) {
@@ -35,15 +37,17 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            guard !didStart else { return }
+            didStart = true
+
             wm.activate()
             Task { await hrm.requestAuthorization() }
 
-            // ★ Timerはここに1個だけ
             timer?.invalidate()
             timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
                 hrm.fetchLatest()
                 if let hr = hrm.latestHR {
-                    wm.processHeartRate(hr: hr) // ★安定策：値が同じでも評価される
+                    wm.processHeartRate(hr: hr)
                 }
             }
         }
