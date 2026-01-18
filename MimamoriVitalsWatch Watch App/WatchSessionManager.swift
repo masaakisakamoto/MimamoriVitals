@@ -15,8 +15,15 @@ final class WatchSessionManager: NSObject, ObservableObject {
     override private init() { super.init() }
 
     // ③ 変化量トリガ（±8bpm）＋最短10秒
-    private let minInterval: TimeInterval = 10
-    private let deltaThreshold: Double = 8
+    // 本番
+    //    private let minInterval: TimeInterval = 10
+    //    private let deltaThreshold: Double = 8
+    
+    // デモ用
+    private let minInterval: TimeInterval = 3
+    private let deltaThreshold: Double = 2
+    //
+    
     private var lastSentAt: Date? = nil
     private var lastSentHR: Double? = nil
 
